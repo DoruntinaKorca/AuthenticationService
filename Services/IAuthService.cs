@@ -1,13 +1,13 @@
-﻿using AuthenticationService.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using AuthenticationService.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.Services
 {
     public interface IAuthService
     {
-       Task<UserDto> UserLogin(LoginDto loginDto);
+        Task<string> UserLogin(LoginDto loginDto);
     }
 }
