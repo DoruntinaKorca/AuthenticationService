@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using AuthenticationService.Models;
 using AuthenticationService.Persistence;
 using AuthenticationService.Services;
@@ -14,11 +19,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AuthenticationService
 {
@@ -46,16 +46,18 @@ namespace AuthenticationService
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddCors(opt => {
+            services.AddCors(opt =>
+            {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                    policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials().WithOrigins("http://localhost:3000");
                 });
             });
 
-            services.AddIdentityCore<User>(opt => {
+            services.AddIdentityCore<User>(opt =>
+            {
                 opt.Password.RequireNonAlphanumeric = false;
-                
+
             }).AddEntityFrameworkStores<AuthenticationContext>()
                 .AddSignInManager<SignInManager<User>>();
 
@@ -65,7 +67,8 @@ namespace AuthenticationService
 
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme
-                ).AddJwtBearer(opt => {
+                ).AddJwtBearer(opt =>
+                {
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
