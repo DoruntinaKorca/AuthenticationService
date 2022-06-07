@@ -1,15 +1,13 @@
-﻿using AuthenticationService.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-
 using System.Security.Claims;
-
 using System.Text;
 using System.Threading.Tasks;
+using AuthenticationService.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AuthenticationService.Services
 {
@@ -49,6 +47,22 @@ namespace AuthenticationService.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<JwtSecurityToken> Verify(string jwt)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_config["TokenKey"]);
+
+            TokenValidationResult validationResult = await tokenHandler.ValidateTokenAsync(jwt, new TokenValidationParameters
+            {
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuerSigningKey = true,
+                ValidateAudience = false,
+                ValidateIssuer = false
+            });
+
+            return (JwtSecurityToken)validationResult.SecurityToken;
         }
     }
 }

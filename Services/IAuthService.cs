@@ -9,5 +9,7 @@ namespace AuthenticationService.Services
     public interface IAuthService
     {
         Task<string> UserLogin(LoginDto loginDto);
+
+        Task<string> GetIDFromToken(string token);
     }
 }
