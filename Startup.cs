@@ -43,7 +43,7 @@ namespace AuthenticationService
 
             services.AddDbContext<AuthenticationContext>(opt =>
             {
-                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddCors(opt =>
