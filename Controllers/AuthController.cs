@@ -19,11 +19,17 @@ namespace AuthenticationService.Controllers
     {
 
         private readonly IAuthService _authService;
+     //   private readonly JwtService _jwtService;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
 
             _authService = authService;
+         //  _jwtService = jwtService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost("login")]
@@ -46,6 +52,23 @@ namespace AuthenticationService.Controllers
 
             return Ok();
 
+        }
+        [HttpPost("register")]
+        public async Task<ActionResult> Register(RegisterDto registerDto)
+        {
+            if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+            {
+                return BadRequest("Email taken");
+            }
+          
+            var user = new User
+            {
+                UserName=registerDto.Username,
+                Email = registerDto.Email
+            };
+
+            return Ok( await _userManager.CreateAsync(user, registerDto.Password));
+    
         }
 
         [HttpGet("getIdClaim")]

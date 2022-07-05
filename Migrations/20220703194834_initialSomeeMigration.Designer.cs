@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthenticationService.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20220614104602_InitialSomeeMigration")]
-    partial class InitialSomeeMigration
+    [Migration("20220703194834_initialSomeeMigration")]
+    partial class initialSomeeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuthenticationService.Migrations
 {
-    public partial class InitialSomeeMigration : Migration
+    public partial class initialSomeeMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

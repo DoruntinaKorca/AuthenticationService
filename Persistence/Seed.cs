@@ -10,28 +10,43 @@ namespace AuthenticationService.Persistence
     public class Seed
     {
         public static async Task SeedUsers(AuthenticationContext context, UserManager<User> userManager) { 
-            if(!context.Users.Any())
-            {
+           /*
                 var users = new List<User>
                 {
                     new User{
-                        UserName="DoruntinaK",
+                      //  UserName="DoruntinaK",
                         Email="dk40651@ubt-uni.net"
                     },
                      new User{
-                        UserName="RilindB",
+                       // UserName="RilindB",
                         Email="rb47139@ubt-uni.net"
                     },
                       new User{
-                        UserName="EndritM", 
+                      //  UserName="EndritM", 
                         Email="em47593@ubt-uni.net" 
+                      },
+                      new User{
+                    
+                        Email="medina.shamolli@ubt-uni.net" 
+                      },
+                      new User{
+                    
+                        Email="ramiz.hoxha@ubt-uni.net" 
+                      },
+                      new User{
+             
+                        Email="arber.kadriu@ubt-uni.net" 
+                      },
+                      new User{
+                  
+                        Email="sramadani@ubt-uni.net" 
                       }
                 };
                 foreach (var user in users)
                 {
                     await userManager.CreateAsync(user, "Pa$$word1");
                 }
-            }
+            */
             await context.SaveChangesAsync();
         }
     }
