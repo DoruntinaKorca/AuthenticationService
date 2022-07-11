@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AuthenticationService.EventProcessing;
 using AuthenticationService.Models;
 using AuthenticationService.Persistence;
+using AuthenticationService.Profiles;
 using AuthenticationService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +38,11 @@ namespace AuthenticationService
         {
 
             services.AddControllers();
+
+
+            services.AddHostedService<MessageBusSubscriber>();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthenticationService", Version = "v1" });
@@ -61,7 +68,7 @@ namespace AuthenticationService
             }).AddEntityFrameworkStores<AuthenticationContext>()
                 .AddSignInManager<SignInManager<User>>();
 
-
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
 
@@ -80,8 +87,12 @@ namespace AuthenticationService
                 });
 
             services.AddScoped<IJwtService, JwtService>();
+
             services.AddScoped<IAuthService, AuthService>();
 
+            services.AddScoped<IUsersRepo, UsersRepo>();
+
+            services.AddSingleton<IEventProcessor, EventProcessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
