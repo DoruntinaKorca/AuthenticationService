@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AuthenticationService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/authenticationservice/[controller]")]
     public class AuthController : ControllerBase
     {
 
